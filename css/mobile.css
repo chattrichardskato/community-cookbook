@@ -1,0 +1,129 @@
+/* ========================================
+   Mobile-First Styles & Overrides
+======================================== */
+
+/* Bottom Navigation for Mobile */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    padding: 8px 0;
+    z-index: 1000;
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+}
+
+.mobile-bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.mobile-bottom-nav .nav-item .icon {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+}
+
+.mobile-bottom-nav .nav-item.active {
+    color: var(--primary);
+}
+
+.mobile-bottom-nav .nav-item.active .icon {
+    color: var(--primary);
+}
+
+/* Mobile Calendar View */
+.calendar-mobile {
+    display: none;
+}
+
+/* Smaller Input Fields on Mobile */
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        display: flex;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .recipe-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .recipe-card img {
+        height: 140px;
+    }
+
+    .recipe-card-content {
+        padding: 12px;
+    }
+
+    .recipe-card-content h3 {
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .recipe-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 40px 0;
+    }
+
+    .brand-name {
+        font-size: 1.2rem;
+    }
+
+    .logo-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .feature-card {
+        padding: 20px;
+    }
+}
+
+/* Show/hide based on screen size */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-only {
+        display: none !important;
+    }
+}
