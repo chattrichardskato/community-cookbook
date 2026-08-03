@@ -5,7 +5,7 @@
 const API_CONFIG = {
     spoonacular: {
         baseUrl: 'https://api.spoonacular.com',
-        apiKey: '299f9d89b4cd4658bbd3278e6f3db201', // Replace with your actual API key
+        apiKey: 'YOUR_API_KEY_HERE', // Replace with your actual API key
         endpoints: {
             nutrition: '/recipes/{id}/nutritionWidget.json',
             search: '/recipes/complexSearch'
@@ -13,8 +13,8 @@ const API_CONFIG = {
     },
     edamam: {
         baseUrl: 'https://api.edamam.com',
-        appId: '09719c10', // Replace with your actual app ID
-        appKey: '9b19b7ae7d284a486cfe5ffe0b932664', // Replace with your actual app key
+        appId: 'YOUR_APP_ID_HERE', // Replace with your actual app ID
+        appKey: 'YOUR_APP_KEY_HERE', // Replace with your actual app key
         endpoints: {
             nutrition: '/api/nutrition-data',
             search: '/api/food-database/v2/parser'
@@ -43,22 +43,39 @@ async function fetchNutritionInfo(recipeId) {
 }
 
 // ========================================
-// Fetch Recipe Nutrition by ID
+// Enhanced Nutrition API Call (YOUR CODE FIXED)
 // ========================================
 async function fetchRecipeNutrition(recipeId) {
     try {
-        // Using Spoonacular API
+        // FIX: Use the correct API endpoint format
         const url = `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.json?apiKey=${API_CONFIG.spoonacular.apiKey}`;
+        
+        console.log(`🔍 Fetching nutrition data for recipe ${recipeId}...`);
         const response = await fetch(url);
         
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
+            throw new Error(`API error: ${response.status} - ${response.statusText}`);
         }
         
         const data = await response.json();
-        return data;
+        console.log('✅ Nutrition data received:', data);
+        
+        // Transform data for display
+        // FIX: Use proper property names from Spoonacular response
+        return {
+            calories: data.calories || 'N/A',
+            totalFat: data.fat || data.totalFat || 'N/A',
+            saturatedFat: data.saturatedFat || data['Saturated Fat'] || 'N/A',
+            cholesterol: data.cholesterol || 'N/A',
+            sodium: data.sodium || 'N/A',
+            carbohydrates: data.carbohydrates || data['Total Carbohydrate'] || 'N/A',
+            fiber: data.fiber || data['Dietary Fiber'] || 'N/A',
+            sugar: data.sugar || data['Sugars'] || 'N/A',
+            protein: data.protein || 'N/A'
+        };
     } catch (error) {
-        console.warn('Using fallback nutrition data:', error);
+        console.warn('⚠️ Nutrition API error:', error.message);
+        // FIX: Return fallback data instead of failing
         return getFallbackNutrition();
     }
 }
@@ -128,7 +145,7 @@ function getDietaryTags(recipe) {
 }
 
 // ========================================
-// Fallback Nutrition Data
+// Fallback Nutrition Data (FIXED)
 // ========================================
 function getFallbackNutrition() {
     return {
@@ -140,7 +157,8 @@ function getFallbackNutrition() {
         carbohydrates: 'N/A',
         fiber: 'N/A',
         sugar: 'N/A',
-        protein: 'N/A'
+        protein: 'N/A',
+        isFallback: true // Flag to indicate this is fallback data
     };
 }
 
@@ -155,54 +173,33 @@ function getFallbackDietary() {
 }
 
 // ========================================
-// Test API Connection
+// Test API Connection (NEW)
 // ========================================
 async function testAPIConnection() {
     try {
         const testResponse = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey=' + API_CONFIG.spoonacular.apiKey + '&query=chicken');
         if (testResponse.ok) {
             console.log('✅ Spoonacular API connection successful');
+            return true;
         } else {
             console.warn('⚠️ Spoonacular API connection failed');
+            return false;
         }
     } catch (error) {
         console.warn('⚠️ API connection error:', error.message);
+        return false;
     }
 }
 
 // ========================================
-// Expose functions
+// Expose functions globally
 // ========================================
 window.fetchNutritionInfo = fetchNutritionInfo;
 window.fetchRecipeNutrition = fetchRecipeNutrition;
 window.fetchDietaryInfo = fetchDietaryInfo;
 window.getDietaryTags = getDietaryTags;
 window.testAPIConnection = testAPIConnection;
+window.getFallbackNutrition = getFallbackNutrition;
+window.getFallbackDietary = getFallbackDietary;
 
-// Enhanced nutrition API call
-async function fetchRecipeNutrition(recipeId) {
-    try {
-        const url = `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.json?apiKey=${API_CONFIG.spoonacular.apiKey}`;
-        const response = await fetch(url);
-        
-        if (!response.ok) throw new Error(`API error: ${response.status}`);
-        
-        const data = await response.json();
-        
-        // Transform data for display
-        return {
-            calories: data.calories || 'N/A',
-            totalFat: data.fat || 'N/A',
-            saturatedFat: data.saturatedFat || 'N/A',
-            cholesterol: data.cholesterol || 'N/A',
-            sodium: data.sodium || 'N/A',
-            carbohydrates: data.carbohydrates || 'N/A',
-            fiber: data.fiber || 'N/A',
-            sugar: data.sugar || 'N/A',
-            protein: data.protein || 'N/A'
-        };
-    } catch (error) {
-        console.warn('Nutrition API error:', error);
-        return getFallbackNutrition();
-    }
-}
+console.log('🍳 API Module Loaded');
