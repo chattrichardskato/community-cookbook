@@ -178,3 +178,31 @@ window.fetchRecipeNutrition = fetchRecipeNutrition;
 window.fetchDietaryInfo = fetchDietaryInfo;
 window.getDietaryTags = getDietaryTags;
 window.testAPIConnection = testAPIConnection;
+
+// Enhanced nutrition API call
+async function fetchRecipeNutrition(recipeId) {
+    try {
+        const url = `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.json?apiKey=${API_CONFIG.spoonacular.apiKey}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) throw new Error(`API error: ${response.status}`);
+        
+        const data = await response.json();
+        
+        // Transform data for display
+        return {
+            calories: data.calories || 'N/A',
+            totalFat: data.fat || 'N/A',
+            saturatedFat: data.saturatedFat || 'N/A',
+            cholesterol: data.cholesterol || 'N/A',
+            sodium: data.sodium || 'N/A',
+            carbohydrates: data.carbohydrates || 'N/A',
+            fiber: data.fiber || 'N/A',
+            sugar: data.sugar || 'N/A',
+            protein: data.protein || 'N/A'
+        };
+    } catch (error) {
+        console.warn('Nutrition API error:', error);
+        return getFallbackNutrition();
+    }
+}
