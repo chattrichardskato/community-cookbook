@@ -5,7 +5,7 @@
 const API_CONFIG = {
     spoonacular: {
         baseUrl: 'https://api.spoonacular.com',
-        apiKey: 'YOUR_API_KEY_HERE', // Replace with your actual API key
+        apiKey: '299f9d89b4cd4658bbd3278e6f3db201', // Replace with your actual API key
         endpoints: {
             nutrition: '/recipes/{id}/nutritionWidget.json',
             search: '/recipes/complexSearch'
@@ -13,8 +13,8 @@ const API_CONFIG = {
     },
     edamam: {
         baseUrl: 'https://api.edamam.com',
-        appId: 'YOUR_APP_ID_HERE', // Replace with your actual app ID
-        appKey: 'YOUR_APP_KEY_HERE', // Replace with your actual app key
+        appId: '09719c10', // Replace with your actual app ID
+        appKey: '9b19b7ae7d284a486cfe5ffe0b932664', // Replace with your actual app key
         endpoints: {
             nutrition: '/api/nutrition-data',
             search: '/api/food-database/v2/parser'
