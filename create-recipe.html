@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Cookbook - Add Recipe</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/mobile.css" />
+    <link rel="stylesheet" href="css/desktop.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect x="5" y="20" width="30" height="15" rx="3" fill="#C4734F" />
+                        <rect x="15" y="5" width="10" height="15" rx="2" fill="#C4734F" />
+                        <path d="M12 25 L28 25 L24 32 L16 32 L12 25Z" fill="#C4734F" />
+                        <circle cx="20" cy="18" r="6" fill="#F5E6D3" />
+                    </svg>
+                </div>
+                <span class="brand-name">Community Cookbook</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="create-recipe.html" class="active">Add Recipe</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="#" onclick="logoutUser()">Logout</a></li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                        🌓
+                    </button>
+                </li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle Menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container with-sidebar">
+            <div class="page-header">
+                <h1>📝 Share Your Recipe</h1>
+                <p>Share your favorite recipe with the community</p>
+            </div>
+
+            <!-- Recipe Form -->
+            <form id="recipeForm" class="recipe-form" onsubmit="submitRecipe(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recipeTitle">Recipe Title *</label>
+                        <input type="text" id="recipeTitle" placeholder="e.g., Grandma's Chocolate Chip Cookies" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recipeCategory">Category *</label>
+                        <select id="recipeCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="Appetizer">Appetizer</option>
+                            <option value="Main Dish">Main Dish</option>
+                            <option value="Side Dish">Side Dish</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Pasta">Pasta</option>
+                            <option value="Soup">Soup</option>
+                            <option value="Salad">Salad</option>
+                            <option value="Beverage">Beverage</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cookingTime">Cooking Time</label>
+                        <input type="text" id="cookingTime" placeholder="e.g., 30 min" />
+                    </div>
+                    <div class="form-group">
+                        <label for="servings">Servings</label>
+                        <input type="number" id="servings" placeholder="e.g., 4" min="1" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="recipeImage">Image URL</label>
+                        <input type="url" id="recipeImage" placeholder="https://example.com/image.jpg" />
+                        <small>Leave empty to use a placeholder image</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ingredients">Ingredients *</label>
+                        <textarea id="ingredients" rows="6" placeholder="Enter each ingredient on a new line&#10;e.g.,&#10;2 cups all-purpose flour&#10;1 cup sugar&#10;2 eggs" required></textarea>
+                        <small>One ingredient per line</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="instructions">Instructions *</label>
+                        <textarea id="instructions" rows="10" placeholder="Enter step-by-step instructions&#10;e.g.,&#10;1. Preheat oven to 375°F&#10;2. Mix dry ingredients&#10;3. Add wet ingredients" required></textarea>
+                        <small>One step per line</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Dietary Tags (Select all that apply)</label>
+                        <div class="dietary-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="vegetarian" /> Vegetarian
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="vegan" /> Vegan
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="gluten-free" /> Gluten-Free
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="dairy-free" /> Dairy-Free
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="nut-free" /> Nut-Free
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="keto" /> Keto
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" value="low-carb" /> Low-Carb
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="messageContainer"></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary btn-large">📤 Share Recipe</button>
+                    <button type="reset" class="btn-secondary">Clear Form</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <button class="nav-item" data-target="dashboard.html">
+            <span class="icon">🏠</span>
+            Home
+        </button>
+        <button class="nav-item active" data-target="create-recipe.html">
+            <span class="icon">📝</span>
+            Add
+        </button>
+        <button class="nav-item" data-target="calendar.html">
+            <span class="icon">📅</span>
+            Calendar
+        </button>
+        <button class="nav-item" data-target="profile.html">
+            <span class="icon">👤</span>
+            Profile
+        </button>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Community Cookbook. Made with ❤️ for our neighborhood.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/recipes.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
